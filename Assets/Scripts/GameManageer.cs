@@ -73,6 +73,7 @@ public class GameManageer : MonoBehaviour
                     bird.rotation = 15.0f;
                 else
                     bird.rotation = Mathf.Clamp(bird.velocity.y, -1800.0f, 0.0f) * 0.02f;
+
                 break;
             case GameState.GameOver:
                 bird.transform.GetComponent<Animation>().Stop();
