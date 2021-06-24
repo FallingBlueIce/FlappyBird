@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Audio;
 using TMPro;
 
 namespace FlappyBird
@@ -78,13 +77,6 @@ namespace FlappyBird
         public Button playBtn2;
         public Sprite _play;
         public Sprite _pause;
-        public GameObject quitBox;
-        public Button quitBtn;
-        public Button cancelBtn;
-
-        public AudioClip before;
-        public AudioClip gaming;
-        public AudioSource source;
 
 
         bool isPaused;
@@ -103,7 +95,7 @@ namespace FlappyBird
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                quitBox.SetActive(true);
+                Application.Quit();
             }
         }
 
@@ -116,12 +108,9 @@ namespace FlappyBird
             bird.rb.velocity = new Vector2(0.0f, 0.0f);
             playBtn1.gameObject.SetActive(true);
             playBtn2.gameObject.SetActive(false);
-            scoreInGame.transform.gameObject.SetActive(false);
+            scoreInGame.transform.parent.gameObject.SetActive(false);
             scoreBoard.gameObject.SetActive(false);
             Score = 0;
-
-            source.clip = gaming;
-            source.Play();
         }
 
         private void Begin()
@@ -132,11 +121,8 @@ namespace FlappyBird
             pipe.OnEnterGame();
             playBtn1.gameObject.SetActive(false);
             playBtn2.gameObject.SetActive(true);
-            scoreInGame.transform.gameObject.SetActive(true);
+            scoreInGame.transform.parent.gameObject.SetActive(true);
             scoreBoard.gameObject.SetActive(false);
-
-            source.clip = before;
-            source.Play();
         }
 
         private void End()
@@ -146,20 +132,18 @@ namespace FlappyBird
             pipe.OnExitGame();
             playBtn1.gameObject.SetActive(true);
             playBtn2.gameObject.SetActive(false);
-            scoreInGame.transform.gameObject.SetActive(false);
+            scoreInGame.transform.parent.gameObject.SetActive(false);
             scoreBoard.gameObject.SetActive(true);
         }
 
         private void resume()
         {
             Time.timeScale = 1.0f;
-            source.Play();
         }
 
         private void pause()
         {
             Time.timeScale = 0.0f;
-            source.Pause();
         }
         private void setScore()
         {
@@ -211,14 +195,6 @@ namespace FlappyBird
             Platform.collied += () => {
                 status = GameState.GameOver;
             };
-
-            quitBtn.onClick.AddListener(() => {
-                Application.Quit();
-            });
-
-            cancelBtn.onClick.AddListener(() => {
-                quitBox.SetActive(false);
-            });
         }
     }
 

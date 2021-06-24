@@ -22,7 +22,6 @@ namespace FlappyBird
 
         IEnumerator GeneratePipes() 
         {
-            yield return new WaitForSeconds(1.5f);
             while(true)
             {
                 GameObject pipe = Instantiate(Pipe, this.transform);
